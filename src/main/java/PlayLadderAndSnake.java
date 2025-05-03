@@ -11,6 +11,10 @@ public class PlayLadderAndSnake {
     }
 
     public void getNumberOfPlayersFromUser() {
+        System.out.println("##################################################################");
+        System.out.println("#  Welcome to the Ladder And Snake game by Amin and Kirththiga!  #");
+        System.out.println("##################################################################\n");
+
         System.out.println("Enter the # of players for your game – The number must be between 2 and 4 inclusively: ");
 
         Scanner input = new Scanner(System.in);

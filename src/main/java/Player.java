@@ -1,4 +1,4 @@
-public class Player {
+public class Player implements Comparable<Player> {
     private int id;
     private String name;
     private int location;
@@ -9,16 +9,16 @@ public class Player {
     public Player(int id) {
         this.id = id;
         this.name = "Player " + id;
-        this.location = 0;
+        this.location = 1;
     }
 
     public Player(int id, String name) {
         this.id = id;
         this.name = name;
-        this.location = 0;
+        this.location = 1;
     }
 
-    public void move(int squares) {
+    public void moveForward(int squares) {
         location += squares;
     }
 
@@ -50,6 +50,20 @@ public class Player {
 
     public void setLocation(int location) {
         this.location = location;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        // Players need to be sorted in decreasing order
+        if (getLocation() > o.getLocation()) {
+            return -1;
+        }
+        else if (getLocation() < o.getLocation()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override

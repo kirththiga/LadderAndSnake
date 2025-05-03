@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class LadderAndSnake {
     private int[] board;
@@ -10,14 +11,14 @@ public class LadderAndSnake {
         board = new int[106];
         players = new ArrayList<Player>();
         this.numberOfPlayers = numberOfPlayers;
-        initializeBoard();
+        initializeBoardWithLadderAndSnake();
     }
 
     public LadderAndSnake(int[] board) {
         this.board = board;
     }
 
-    public void initializeBoard() {
+    public void initializeBoardWithLadderAndSnake() {
         // To update the location of the players when moving up the ladder
         board[1] = 38;
         board[4] = 14;
@@ -51,18 +52,38 @@ public class LadderAndSnake {
         return (int)(Math.random() * 6) + 1;
     }
 
+    public void orderOfPlay() {
+        for(Player player : players) {
+            int roll = flipDice();
+            player.setLocation(roll);
+            System.out.println(player.getName() + " got a dice value of " + roll);
+        }
+
+        Collections.sort(players);
+        resetPlayerLocation();
+    }
+
+    public void resetPlayerLocation() {
+        for(Player player : players) {
+            player.setLocation(1);
+        }
+    }
+
     public void play() {
-        System.out.println("-Game is Played by " + numberOfPlayers + " players");
+        System.out.println("---Game is Played by " + numberOfPlayers + " players");
         createPlayers();
 
-        System.out.println("-Now deciding which player will start playing:");
-        System.out.println("-Reached final decision on the order of playing: ");
+        System.out.println("---Now deciding which player will start playing:");
+        orderOfPlay();
+
+        System.out.println("---Reached final decision on the order of playing: ");
 
         boolean gameOver = false;
         while (!gameOver) {
             for(Player player : players) {
                 int roll = flipDice();
-                player.move(roll);
+                player.moveForward(roll);
+
                 int currentLocation = player.getLocation();
                 if(board[currentLocation] != 0) {
                     if(player.getLocation() < board[currentLocation]) {
@@ -76,7 +97,7 @@ public class LadderAndSnake {
                 else if(currentLocation > 100) {
                     int goBack = currentLocation-100;
                     player.setLocation(100-goBack);
-                    System.out.println("-wnr back" + player.getName() + " got a dice value of " + roll + "; now in square " + player.getLocation());
+                    System.out.println("-" + player.getName() + " got a dice value of " + roll + "; now in square " + player.getLocation());
                 }
                 else {
                     System.out.println("-" + player.getName() + " got a dice value of " + roll + "; now in square " + currentLocation);
@@ -84,13 +105,13 @@ public class LadderAndSnake {
 
                 if(player.getLocation() == 100) {
                     gameOver = true;
-                    //System.out.println("-" + player.getName() + " got a dice value of " + roll + "; now in square " + currentLocation);
-                    System.out.println("-" + player.getName() + " won!!!");
+                    System.out.println("-----" + player.getName() + " won the game!!! The program will terminate!");
                     break;
                 }
             }
+
             if(!gameOver) {
-                System.out.println("Game is not over; flipping again");
+                System.out.println("---Game is not over; flipping again");
             }
         }
     }
