@@ -106,7 +106,13 @@ public class LadderAndSnake {
             orderOfPlay(tiedPlayers);
         }
         else {
-            this.players.addAll(orderPlayers);
+            // Only add players that doesn't exist in the list.
+            for(int i = 0; i < orderPlayers.size(); i++) {
+                if(!this.players.contains(orderPlayers.get(i))) {
+                    this.players.add(orderPlayers.get(i));
+                }
+            }
+
             resetAllPlayerLocation();
         }
     }
