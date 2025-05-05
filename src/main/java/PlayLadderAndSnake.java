@@ -13,20 +13,7 @@ public class PlayLadderAndSnake {
         welcomeMessage();
 
         System.out.println("Enter the # of players for your game – The number must be between 2 and 4 inclusively: ");
-        Scanner input = new Scanner(System.in);/*
-        int numberOfPlayers = input.nextInt();
-
-        int count = 1;
-        while((numberOfPlayers < 2 || numberOfPlayers > 4) && count < 4) {
-            System.out.println("Bad Attempt " + count +" - Invalid # of players. Please enter a # between 2 and 4 inclusively: ");
-
-            if(count == 3) {
-                System.out.println("This is your last attempt: ");
-            }
-
-            numberOfPlayers = input.nextInt();
-            count++;
-        }*/
+        Scanner input = new Scanner(System.in);
         int numberOfPlayers = 0;
         int count = 0;
 
@@ -50,6 +37,7 @@ public class PlayLadderAndSnake {
                     }
                 }
             } catch (InputMismatchException e) {
+                // Discard the input
                 input.nextLine();
                 count++;
                 System.out.println("Bad Attempt " + count +" - Invalid input. Please enter a # between 2 and 4 inclusively: ");
