@@ -20,7 +20,7 @@ public class LadderAndSnake {
     }
 
     public void initializeBoardWithLadderAndSnake() {
-        // To update the location of the players when moving up the ladder
+        // To update the location of the players when moving up the ladder.
         board[1] = 38;
         board[4] = 14;
         board[9] = 31;
@@ -31,7 +31,7 @@ public class LadderAndSnake {
         board[71] = 91;
         board[80] = 100;
 
-        // To update the location of the players when moving down the snake
+        // To update the location of the players when moving down the snake.
         board[16] = 6;
         board[48] = 30;
         board[64] = 60;
@@ -102,6 +102,7 @@ public class LadderAndSnake {
                 this.players.addAll(tiedPlayers);
             }
 
+            // Repeat the same process until there is no tie.
             orderOfPlay(tiedPlayers);
         }
         else {
@@ -122,28 +123,31 @@ public class LadderAndSnake {
         return orderPlayers;
     }
 
-    private ArrayList<Player> getTiedPlayers(ArrayList<Player> tied) {
+    private ArrayList<Player> getTiedPlayers(ArrayList<Player> playersList) {
         ArrayList<Player> tiedPlayers = new ArrayList<Player>();
 
         boolean tie = false;
 
-        for(int i=0; i<tied.size(); i++) {
-            for(int j=i+1; j<tied.size(); j++) {
-                if(tied.get(i).getLocation() != tied.get(j).getLocation()) {
+        for(int i=0; i<playersList.size(); i++) {
+            for(int j=i+1; j<playersList.size(); j++) {
+                if(playersList.get(i).getLocation() != playersList.get(j).getLocation()) {
                     break;
                 }
-                else if(!tiedPlayers.contains(tied.get(j))) {
-                    tiedPlayers.add(tied.get(j));
+                // Check if the tied player exists in the list.
+                else if(!tiedPlayers.contains(playersList.get(j))) {
+                    tiedPlayers.add(playersList.get(j));
                     tie = true;
                 }
             }
 
+            // If a tie, add the player in index i to the tied players list.
             if(tie) {
-                tiedPlayers.add(tied.get(i));
+                tiedPlayers.add(playersList.get(i));
                 tie = false;
             }
 
-            if(tiedPlayers.size() >= tied.size()) {
+            // Stop checking for tied players if the tied players list is greater than or equal to the number of players.
+            if(tiedPlayers.size() >= playersList.size()) {
                 break;
             }
         }

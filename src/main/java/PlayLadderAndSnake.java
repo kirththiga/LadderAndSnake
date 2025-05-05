@@ -18,7 +18,7 @@ public class PlayLadderAndSnake {
         int count = 0;
 
         while (count < 4) {
-
+            // Use a try catch block, so that the user enters a valid integer and no other characters.
             try {
                 numberOfPlayers = input.nextInt();
 
@@ -37,7 +37,7 @@ public class PlayLadderAndSnake {
                     }
                 }
             } catch (InputMismatchException e) {
-                // Discard the input
+                // Discard input
                 input.nextLine();
                 count++;
                 System.out.println("Bad Attempt " + count +" - Invalid input. Please enter a # between 2 and 4 inclusively: ");
