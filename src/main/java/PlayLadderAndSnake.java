@@ -31,6 +31,7 @@ public class PlayLadderAndSnake {
             System.out.println("Bad Attempt 4! You have exhausted all your chances. The program will terminate!");
             System.exit(0);
         }
+
         return numberOfPlayers;
     }
 

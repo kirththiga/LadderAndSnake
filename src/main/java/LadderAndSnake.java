@@ -51,9 +51,17 @@ public class LadderAndSnake {
         createPlayers();
 
         System.out.println("---Now deciding which player will start playing:");
-        orderOfPlay();
+        orderOfPlay(players);
 
-        System.out.println("---Reached final decision on the order of playing: ");
+        System.out.print("---Reached final decision on the order of playing: ");
+        for(int i=0; i < players.size(); i++) {
+            if(i < numberOfPlayers - 1) {
+                System.out.print(players.get(i).getName() + ", ");
+            }
+            else {
+                System.out.println(players.get(i).getName());
+            }
+        }
         playUntilGameOver();
     }
 
@@ -64,18 +72,68 @@ public class LadderAndSnake {
         }
     }
 
-    private void orderOfPlay() {
-        for(Player player : players) {
+    private void orderOfPlay(ArrayList<Player> orderPlayers) {
+        for(Player player : orderPlayers) {
             int roll = flipDice();
             player.setLocation(roll);
             System.out.println(player.getName() + " got a dice value of " + roll);
         }
 
-        Collections.sort(players);
-        resetPlayerLocation();
+        Collections.sort(orderPlayers);
+
+        ArrayList<Player> tiedPlayers = getTiedPlayers(orderPlayers);
+
+        if(tiedPlayers.size() > 1 && tiedPlayers.size() <=4) {
+            System.out.print("A tie was achieved between ");
+            for (int i = 0; i < tiedPlayers.size(); i++) {
+                if(i == 1 && tiedPlayers.size() == 2) {
+                    System.out.print(" and ");
+                }
+                else if (i >= 1 && i <= tiedPlayers.size() - 1) {
+                    System.out.print(", ");
+                }
+
+                System.out.print(tiedPlayers.get(i).getName());
+            }
+
+            System.out.println(". Attempting to break the tie");
+            this.players.removeAll(tiedPlayers);
+            orderOfPlay(tiedPlayers);
+        }
+        else {
+            this.players.addAll(orderPlayers);
+            resetAllPlayerLocation();
+        }
     }
 
-    private void resetPlayerLocation() {
+    private ArrayList<Player> getTiedPlayers(ArrayList<Player> tied) {
+        ArrayList<Player> tiedPlayers = new ArrayList<Player>();
+
+        boolean tie = false;
+        for(int i=0; i<tied.size(); i++) {
+            for(int j=i+1; j<tied.size(); j++) {
+                if(tied.get(i).getLocation() != tied.get(j).getLocation()) {
+                    break;
+                }
+                else if(!tiedPlayers.contains(tied.get(j))) {
+                    tiedPlayers.add(tied.get(j));
+                    tie = true;
+                }
+            }
+
+            if(tie) {
+                tiedPlayers.add(tied.get(i));
+                tie = false;
+            }
+            if(tiedPlayers.size() >= tied.size()) {
+                break;
+            }
+        }
+
+        return tiedPlayers;
+    }
+
+    private void resetAllPlayerLocation() {
         for(Player player : players) {
             player.setLocation(1);
         }
