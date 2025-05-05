@@ -51,6 +51,18 @@ public class LadderAndSnake {
         createPlayers();
 
         System.out.println("---Now deciding which player will start playing:");
+        decidedPlayerOrder();
+        playUntilGameOver();
+    }
+
+    private void createPlayers() {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Player player = new Player(i+1);
+            players.add(player);
+        }
+    }
+
+    private void decidedPlayerOrder() {
         orderOfPlay(players);
 
         System.out.print("---Reached final decision on the order of playing: ");
@@ -62,29 +74,15 @@ public class LadderAndSnake {
                 System.out.println(players.get(i).getName());
             }
         }
-        playUntilGameOver();
-    }
-
-    private void createPlayers() {
-        for (int i = 0; i < numberOfPlayers; i++) {
-            Player player = new Player(i+1);
-            players.add(player);
-        }
     }
 
     private void orderOfPlay(ArrayList<Player> orderPlayers) {
-        for(Player player : orderPlayers) {
-            int roll = flipDice();
-            player.setLocation(roll);
-            System.out.println(player.getName() + " got a dice value of " + roll);
-        }
 
-        Collections.sort(orderPlayers);
-
-        ArrayList<Player> tiedPlayers = getTiedPlayers(orderPlayers);
+        ArrayList<Player> tiedPlayers = getTiedPlayers(getPlayersFlipDice(orderPlayers));
 
         if(tiedPlayers.size() > 1 && tiedPlayers.size() <=4) {
             System.out.print("A tie was achieved between ");
+
             for (int i = 0; i < tiedPlayers.size(); i++) {
                 if(i == 1 && tiedPlayers.size() == 2) {
                     System.out.print(" and ");
@@ -106,10 +104,23 @@ public class LadderAndSnake {
         }
     }
 
+    private ArrayList<Player> getPlayersFlipDice(ArrayList<Player> orderPlayers) {
+        for(Player player : orderPlayers) {
+            int roll = flipDice();
+            player.setLocation(roll);
+            System.out.println(player.getName() + " got a dice value of " + roll);
+        }
+
+        Collections.sort(orderPlayers);
+
+        return orderPlayers;
+    }
+
     private ArrayList<Player> getTiedPlayers(ArrayList<Player> tied) {
         ArrayList<Player> tiedPlayers = new ArrayList<Player>();
 
         boolean tie = false;
+
         for(int i=0; i<tied.size(); i++) {
             for(int j=i+1; j<tied.size(); j++) {
                 if(tied.get(i).getLocation() != tied.get(j).getLocation()) {
@@ -125,6 +136,7 @@ public class LadderAndSnake {
                 tiedPlayers.add(tied.get(i));
                 tie = false;
             }
+
             if(tiedPlayers.size() >= tied.size()) {
                 break;
             }
