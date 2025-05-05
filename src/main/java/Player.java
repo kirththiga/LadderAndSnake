@@ -18,14 +18,14 @@ public class Player implements Comparable<Player> {
         this.location = 1;
     }
 
-    public void moveForward(int squares) {
-        location += squares;
-    }
-
     public Player(int id, String name, int location) {
         this.id = id;
         this.name = name;
         this.location = location;
+    }
+
+    public void moveForward(int squares) {
+        location += squares;
     }
 
     public int getId() {
