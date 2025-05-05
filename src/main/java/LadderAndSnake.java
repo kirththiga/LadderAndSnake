@@ -71,7 +71,7 @@ public class LadderAndSnake {
                 System.out.print(players.get(i).getName() + ", ");
             }
             else {
-                System.out.println(players.get(i).getName());
+                System.out.print(players.get(i).getName() + "\n");
             }
         }
     }
@@ -96,6 +96,12 @@ public class LadderAndSnake {
 
             System.out.println(". Attempting to break the tie");
             this.players.removeAll(tiedPlayers);
+
+            // Add all the players to the list if there are 2 tied pairs or all 4 players rolled the same number.
+            if(this.players.size() == 0) {
+                this.players.addAll(tiedPlayers);
+            }
+
             orderOfPlay(tiedPlayers);
         }
         else {

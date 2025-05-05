@@ -44,7 +44,7 @@ public class PlayLadderAndSnake {
                     if(count < 4) {
                         System.out.println("Bad Attempt " + count + " - Invalid # of players. Please enter a # between 2 and 4 inclusively: ");
                     }
-                    
+
                     if(count == 3) {
                         System.out.println("This is your last attempt: ");
                     }
